@@ -16,7 +16,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary">登录</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -28,15 +28,36 @@ export default {
     return {
       checked: true,
       formTable:{
-        username:'',
-        password:''
+        username:'admin',
+        password:'123'
       }
     };
   },
-  activated() {},
-  updated(){
-    console.log(this.formTable.username);
-    console.log(this.formTable.password);
+  methods:{
+    
+    login(){
+         var _this=this;
+        this.postRequest('/login',{
+          username:this.formTable.username,
+          password:this.formTable.password
+        }).then(resp=>{
+         
+          if (resp.status==200) {
+            var json=resp.data;
+            if (json.status=='success') {
+              _this.$router.replace({path:'/home'})
+            }else {
+              _this.$alert('登录失败!', '失败!');
+            }
+          }else{
+            this.$alert('登录失败!', '失败!');
+          }
+        },resp=> {
+          console.log("========");
+          
+          _this.$alert('找不到服务器⊙﹏⊙∥!', '失败!');
+        })
+    }
   }
 
 };
