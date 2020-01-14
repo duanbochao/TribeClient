@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Home from '@/components/Home'
 import ArticleList from '@/components/ArticleList'
 import PostArticle from '@/components/PostArticle'
+import UserMana from '@/components/UserMana'
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +42,18 @@ export default new Router({
           meta: {
             keepAlive: true
           }
+        }
+      ]
+    }, {
+      path: '/home',
+      component: Home,
+      name: '用户管理',
+      children: [
+        {
+          path: '/user',
+          iconCls: 'fa fa-user-o',
+          name: 'guan',
+          component: UserMana
         }
       ]
     }

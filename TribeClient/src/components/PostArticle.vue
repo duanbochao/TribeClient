@@ -108,7 +108,9 @@ export default {
         htmlContent: _this.$refs.md.d_render,
         cid:_this.article.cid,
         state:state
-      }).then(resp => {});
+      }).then(resp => {
+        _this.$router.replace({path:"/ArticleList"})
+      });
     },
     handleInputConfirm() {
       let tagValue = this.tagValue;
