@@ -37,11 +37,11 @@
 <script>
 export default {
     created(){
-        console.log("====",this.state);
+      
     },
   data() {
     return {
-        currentPage:-1,
+      currentPage:-1,
       totalCount: -1,
       pageSize: 2,
       tableData: [
@@ -77,7 +77,16 @@ export default {
     currentChange(currentPage) {
       this.currentPage = currentPage;
       console.log(currentPage);
-      
+    },
+    //加载页面
+    loadBlogs(page,count){
+      var _this=this;
+      var url='';
+      if (this.state == -2) {
+          url = "/admin/article/all" + "?page=" + page + "&count=" + count + "&keywords=" + this.keywords;
+        } else {
+          url = "/article/all?state=" + this.state + "&page=" + page + "&count=" + count + "&keywords=" + this.keywords;
+        }
     }
   },
    props: ['state']

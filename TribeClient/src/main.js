@@ -11,7 +11,9 @@ import 'mavon-editor/dist/css/index.css'
 import {postRequest} from './utils/api'
 import {getRequest} from './utils/api'
 import {uploadFileRequest} from './utils/api'
-
+import echarts from 'echarts'
+import './utils/filter_utils.js'
+Vue.prototype.$echarts = echarts 
 Vue.prototype.postRequest=postRequest;
 Vue.prototype.getRequest=getRequest;
 Vue.prototype.uploadFileRequest=uploadFileRequest;

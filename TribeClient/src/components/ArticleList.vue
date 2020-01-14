@@ -4,16 +4,16 @@
       <blog_table state="-1"></blog_table>
     </el-tab-pane>
     <el-tab-pane label="已发表" name="second">
-      <blog_table state="-1"></blog_table>
+      <blog_table state="0"></blog_table>
     </el-tab-pane>
     <el-tab-pane label="草稿箱" name="third">
-      <blog_table></blog_table>
+      <blog_table state="1"></blog_table>
     </el-tab-pane>
     <el-tab-pane label="回收站" name="fourth">
-      <blog_table></blog_table>
+      <blog_table state="2"></blog_table>
     </el-tab-pane>
     <el-tab-pane label="博客管理" name="severn" v-if="isAdmin">
-      <blog_table></blog_table>
+      <blog_table state="-2"></blog_table>
     </el-tab-pane>
     <el-tab-pane label="博客配置" name="six">博客配置</el-tab-pane>
   </el-tabs>

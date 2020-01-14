@@ -5,6 +5,9 @@ import Home from '@/components/Home'
 import ArticleList from '@/components/ArticleList'
 import PostArticle from '@/components/PostArticle'
 import UserMana from '@/components/UserMana'
+import DataCharts from '@/components/DataCharts'
+import cateMana from '@/components/cateMana'
+
 Vue.use(Router)
 
 export default new Router({
@@ -54,6 +57,32 @@ export default new Router({
           iconCls: 'fa fa-user-o',
           name: 'guan',
           component: UserMana
+        }
+      ]
+    }, {
+      path: '/home',
+      component: Home,
+      name: '数据统计',
+      iconCls: 'fa fa-bar-chart',
+      children: [
+        {
+          path: '/charts',
+          iconCls: 'fa fa-bar-chart',
+          name: '数据统计',
+          component: DataCharts
+        }
+      ]
+    }, {
+      path: '/home',
+      component: Home,
+      name: '栏目管理',
+      iconCls: 'fa fa-bar-chart',
+      children: [
+        {
+          path: '/cateMana',
+          iconCls: 'fa fa-bar-chart',
+          name: '栏目管理',
+          component: cateMana
         }
       ]
     }
