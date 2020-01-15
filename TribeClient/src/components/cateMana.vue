@@ -27,7 +27,7 @@
           </el-table-column>
         </el-table>
         <div class="btn">
-          <el-button type="danger" disabled>批量删除</el-button>
+          <el-button type="danger" :disabled="disabled" @click="deleteMany">批量删除</el-button>
         </div>
       </el-main>
     </el-container>
@@ -37,6 +37,7 @@
 export default {
   data() {
     return {
+      disabled: true,
       cateName: "",
       multipleSelection: [],
       tableData: []
@@ -46,6 +47,36 @@ export default {
     this.refresh();
   },
   methods: {
+    doDelete(ids) {
+      var _this=this;
+      //删除按钮后台对接的删除
+      this.postRequest("/admin/category/deleteCateGory", {
+        ids: ids
+      }).then(resp => {
+        if ((resp.data.status = "success")) {
+          _this.$message({
+            message: resp.data.msg,
+            type: "success"
+          });
+          _this.refresh();
+        }else{
+          _this.$message.error(resp.data.msg);
+        }
+      });
+    },
+    deleteMany() {
+      //批量删除
+      var ids = "";
+      this.multipleSelection.forEach(row => {
+        ids = ids + row.id + ",";
+      });
+      this.doDelete(ids);
+    },
+    handleDelete(id, row) {
+      //删除单个
+      var ids = row.id;
+      this.doDelete(ids);
+    },
     handleEdit(index, row) {
       console.log(index);
       var _this = this;
@@ -92,13 +123,12 @@ export default {
       this.getRequest("/admin/category/all").then(resp => {
         if (resp.status == 200) {
           console.log(resp.data);
-
           _this.tableData = resp.data;
         }
       });
     },
     addNewAritcle() {
-        var _this=this;
+      var _this = this;
       var cateNameData = this.cateName;
       if (cateNameData == "" || cateNameData == null) {
         this.$message.error("栏目名称不能为空哦!");
@@ -119,8 +149,14 @@ export default {
       });
     },
     handleSelectionChange(val) {
+      var _this = this;
       this.multipleSelection = val;
-      console.log(val);
+
+      if (val.length > 0) {
+        _this.disabled = false;
+      } else {
+        _this.disabled = true;
+      }
     }
   }
 };
