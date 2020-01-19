@@ -18,6 +18,7 @@
             style="float: right; padding: 3px 0;color:#ff0509"
             type="text"
             class="el-icon-delete"
+            @click="deleteUser(item.id)"
           >&nbsp;删除</el-button>
         </div>
         <div class="item text">
@@ -38,7 +39,7 @@
 
           <div>
             <span>用户状态:</span>
-            <el-switch v-model="item.enabled" active-text="启用" inactive-text="禁用"></el-switch>
+            <el-switch v-model="item.enabled" active-text="启用" inactive-text="禁用" @change="updateEnabled(item.enabled,item.id)"></el-switch>
           </div>
           <div>
             <span>用户角色:</span>
@@ -89,8 +90,31 @@ export default {
     this.getAllRoles();
   },
   methods: {
-    hello(){
-      console.log("helllo world");
+
+    deleteUser(uid){
+   var _this=this;
+   this.postRequest("/admin/user/delete").then(resp=>{
+     if (resp.data.status=="success") {
+        _this.$message({type: 'success', message: '删除成功!'});
+        _this.getDate();
+     }
+   })
+      
+    },
+    updateEnabled(enabled,uid){
+      console.log(enabled,uid);
+     var _this=this;
+      this.postRequest("/admin/user/enabled",{
+        enabled:enabled,
+        uid:uid
+      }).then(resp=>{
+        if (resp.data.status=="success") {
+               _this.$message({type: 'success', message: '更新成功!'});
+               _this.getDate();
+        }else{
+             _this.$message({type: 'error', message: '更新成功!'});
+        }
+      })
       
     },
     getDate() {
